@@ -160,3 +160,7 @@
    background-color: #ffffff;
    color: #000000;
 }
+
+.error-div h2 + h3 {
+   color: #ffffff;
+}
