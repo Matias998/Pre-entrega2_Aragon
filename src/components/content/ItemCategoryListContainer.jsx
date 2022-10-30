@@ -1,27 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import ItemList from './ItemList';
-import { fetchProductJSON } from '../../utils/functions';
+import { getJuegos } from '../../utils/firebase';
 
 const ItemCategoryListContainer = () => {
    const [juegos, setJuegos] = useState([]);
-   const {id} = useParams()
+   const {category} = useParams()
    useEffect(() => {
-      fetchProductJSON('../data/juegos.json').then(juegos => {
-         const juegosDeCategoria = juegos.filter(juego => juego.idCategoria === parseInt(id))
-         const cardJuego = juegosDeCategoria.map(juego => 
-            <div className="card card-juego" key={juego.id}>
-               <img className='card-img-top' src={`.${juego.img}`} alt={juego.titulo} />
+      getJuegos().then(juegos => {
+         const juegosCategoria = juegos.filter(juego => juego[1].categoria.toLowerCase() === category)
+         const cardJuego = juegosCategoria.map(juego =>
+            <div className="card game-card" key={juego[0]}>
+               <img className='card-img-top' src={juego[1].img} alt={juego[1].titulo} />
                <div className="card-body">
-                  <h5 className="card-title">{juego.titulo}</h5>
-                  <p className="card-text">Categoria: {juego.categoria}</p>
-                  <p className="card-text">${juego.precio}</p>
-                  <button className="btn btn-dark"><Link className="nav-link" to={`/item/${juego.id}`}>Ver Detalles</Link></button>
+                  <h5 className="card-title">{juego[1].titulo}</h5>
+                  <p className="card-text">Categoria: {juego[1].categoria}</p>
+                  <p className="card-text">${juego[1].precio}</p>
+                  <button className="btn btn-dark"><Link className="nav-link" to={`/item/${juego[0]}`}>Ver Detalles</Link></button>
                </div>
             </div>)
-         setJuegos(cardJuego)
+            setJuegos(cardJuego)
       })
-   }, [id])
+   }, [category])
 
    return (
       <>

@@ -1,12 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Pagelinks from '../layouts/Pagelinks.jsx';
 import Dropdown from '../layouts/Dropdown.jsx';
 import CartWidget from '../layouts/CartWidget.jsx';
-import SearchBar from '../layouts/SearchBar.jsx';
 
 const Navbar = () => {
-   const dropLista = ["Accion", "Disparos", "Deporte", "Rol", "Lucha"]
+   const dropLista = ["Accion", "Disparos", "Deporte", "Rol", "Pelea"]
 
    return (
       <>
@@ -18,11 +16,9 @@ const Navbar = () => {
             </button>
             <div className="collapse navbar-collapse" id="navbarColor01">
                <ul className="navbar-nav me-auto">
-                  <Pagelinks />
                   <Dropdown lista={dropLista}/>
                </ul>
                <CartWidget />
-               <SearchBar busquedaPlaceholder="Buscar por nombre"/>
             </div>
          </div>
       </nav>

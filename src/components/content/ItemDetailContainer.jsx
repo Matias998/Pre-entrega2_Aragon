@@ -1,25 +1,27 @@
 import React, {useState, useEffect} from 'react';
 import ItemDetail from './ItemDetail';
 import { useParams } from 'react-router-dom';
-import { fetchProductJSON } from '../../utils/functions';
+import { getJuego } from '../../utils/firebase';
 
 const ItemDetailContainer = () => {
    const [juego, setJuego] = useState([]);
    const {id} = useParams()
+
    useEffect(() => {
-      fetchProductJSON('../data/juegos.json').then(juegos => {
-         const juegoElegido = juegos.find(juegoArray => juegoArray.id === parseInt(id))
-         setJuego(juegoElegido)
+      getJuego(id).then(juego => {
+         setJuego(juego)
       })
    }, [])
 
-   return (
-      <>
-      <div className="container">
-         <ItemDetail item={juego}/>
-      </div>
-      </>
-   );
+   if(juego.length !== 0) {
+      return (
+         <>
+         <div className="container">
+            <ItemDetail item={juego}/>
+         </div>
+         </>
+      );
+   }
 }
 
 export default ItemDetailContainer;
